@@ -27,9 +27,6 @@ const httpServer = http.createServer((_req, res) => {
   res.end(JSON.stringify({ status: botStatus, position: botPosition, server: `${HOST}:${PORT}`, username: USERNAME, reconnectAttempts }));
 });
 
-  log(`Health check server on port ${HTTP_PORT}`);
-});
-
 function connect() {
   if (shuttingDown) return;
   reconnectAttempts++;
@@ -37,7 +34,7 @@ function connect() {
   log(`Connecting to ${HOST}:${PORT} as "${USERNAME}" (attempt ${reconnectAttempts})`);
   let client;
   try {
-    client = bedrock.createClient({ host: HOST, port: PORT, username: USERNAME, offline: OFFLINE,  connectTimeout: 30000 });
+    client = bedrock.createClient({ host: HOST, port: PORT, username: USERNAME, offline: OFFLINE, connectTimeout: 30000 });
   } catch (e) { log(`Failed: ${e.message}`); scheduleReconnect(); return; }
 
   let spawned = false, jumpTimer = null, moveAngle = 0;
@@ -87,10 +84,8 @@ function scheduleReconnect() {
 
 process.on('SIGINT', () => { shuttingDown = true; process.exit(0); });
 process.on('SIGTERM', () => { shuttingDown = true; process.exit(0); });
-process.on('SIGINT', () => { shuttingDown = true; process.exit(0); });
-process.on('SIGTERM', () => { shuttingDown = true; process.exit(0); });
 
 httpServer.listen(HTTP_PORT, '0.0.0.0', () => {
   log(`Health check server on port ${HTTP_PORT}`);
   connect();
-
+});
