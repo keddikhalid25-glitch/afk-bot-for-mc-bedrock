@@ -1,0 +1,11 @@
+{
+  "name": "minecraft-bedrock-afk-bot",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node bot.mjs"
+  },
+  "dependencies": {
+    "bedrock-protocol": "^3.56.1"
+  }
+}
