@@ -1,7 +1,7 @@
-FROM node:20-slim
+FROM node:20
 WORKDIR /app
 COPY package.json .
-RUN npm install --ignore-scripts
-RUN sed -i "s/require('.\/rak')('raknet-native')/require('.\/rak')('jsp-raknet')/" node_modules/bedrock-protocol/src/createClient.js
+RUN apt-get update && apt-get install -y python3 make g++ cmake
+RUN npm install
 COPY bot.mjs .
 CMD ["node", "bot.mjs"]
