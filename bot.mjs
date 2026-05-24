@@ -38,7 +38,7 @@ function connect() {
   log(`Connecting to ${HOST}:${PORT} as "${USERNAME}" (attempt ${reconnectAttempts})`);
   let client;
   try {
-    client = bedrock.createClient({ host: HOST, port: PORT, username: USERNAME, offline: OFFLINE, useNativeRaknet: false, connectTimeout: 30000 });
+    client = bedrock.createClient({ host: HOST, port: PORT, username: USERNAME, offline: OFFLINE,  connectTimeout: 30000 });
   } catch (e) { log(`Failed: ${e.message}`); scheduleReconnect(); return; }
 
   let spawned = false, jumpTimer = null, moveAngle = 0;
