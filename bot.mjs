@@ -27,7 +27,6 @@ const httpServer = http.createServer((_req, res) => {
   res.end(JSON.stringify({ status: botStatus, position: botPosition, server: `${HOST}:${PORT}`, username: USERNAME, reconnectAttempts }));
 });
 
-httpServer.listen(HTTP_PORT, '0.0.0.0', () => {
   log(`Health check server on port ${HTTP_PORT}`);
 });
 
@@ -88,5 +87,10 @@ function scheduleReconnect() {
 
 process.on('SIGINT', () => { shuttingDown = true; process.exit(0); });
 process.on('SIGTERM', () => { shuttingDown = true; process.exit(0); });
+process.on('SIGINT', () => { shuttingDown = true; process.exit(0); });
+process.on('SIGTERM', () => { shuttingDown = true; process.exit(0); });
 
-connect();
+httpServer.listen(HTTP_PORT, '0.0.0.0', () => {
+  log(`Health check server on port ${HTTP_PORT}`);
+  connect();
+
